@@ -20,7 +20,7 @@ export function PokemonsProvider({ children }) {
                 Authorization: `Bearer ${token.token}`
             }
         }).then(response => {
-            setPokemons(response.data.results);
+            setPokemons(response.data);
         });
     }
 
