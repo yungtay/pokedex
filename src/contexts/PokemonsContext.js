@@ -17,7 +17,7 @@ export function PokemonsProvider({ children }) {
     function updatePokemons() {
         axios.get(`${process.env.REACT_APP_API_BASE_URL}/pokemons`, {
             headers: {
-                Authorization: token.token
+                Authorization: `Bearer ${token.token}`
             }
         }).then(response => {
             setPokemons(response.data.results);

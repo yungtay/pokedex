@@ -8,11 +8,13 @@ import Footer from "../components/Footer";
 import Button from "../components/Button";
 
 import PokemonsContext from "../contexts/PokemonsContext";
+import UserContext from "../contexts/UserContext";
 
 export default function PokemonPage() {
     const { id } = useParams();
     const [pokemon, setPokemon] = useState(null);
     const { pokemons, updatePokemons } = useContext(PokemonsContext);
+    const { token } = useContext(UserContext);
     
     useEffect(() => {
         if (pokemons) {
@@ -22,11 +24,19 @@ export default function PokemonPage() {
 
     function togglePokemon() {
         if (pokemon.inMyPokemons) {
-            axios.post(`${process.env.REACT_APP_API_BASE_URL}/my-pokemons/${id}/remove`).then(() => {
+            axios.post(`${process.env.REACT_APP_API_BASE_URL}/my-pokemons/${id}/remove`, null, {
+                headers: {
+                    Authorization: `Bearer ${token.token}`
+                }
+            }).then(() => {
                 updatePokemons();
             });
         } else {
-            axios.post(`${process.env.REACT_APP_API_BASE_URL}/my-pokemons/${id}/add`).then(() => {
+            axios.post(`${process.env.REACT_APP_API_BASE_URL}/my-pokemons/${id}/add`, null, {
+                headers: {
+                    Authorization: `Bearer ${token.token}`
+                }
+            }).then(() => {
                 updatePokemons();
             });
         }
